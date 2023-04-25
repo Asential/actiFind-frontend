@@ -4,6 +4,7 @@ import { AppBar, Avatar, Toolbar, Typography, Button } from '@material-ui/core';
 import useStyles from './styles';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
 import { useDispatch } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
 export const Navbar = () => {
     const classes = useStyles();
@@ -22,6 +23,15 @@ export const Navbar = () => {
     
     useEffect(() => {
         const token = user?.token;
+
+        if (token) {
+            const decodedToken = jwtDecode(token);
+
+            // Get time elapsed in miliseconds since token generation.
+            if(decodedToken.exp * 1000 < new Date().getTime()){
+                logout();
+            }
+        }
 
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location]);

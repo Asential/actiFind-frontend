@@ -6,14 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost} from "../../actions/posts";
 
 const Form = ({currentId, setCurrentId}) => {
-    const [postData, setPostData] = useState({host: '',title: '',description: '',tags: '',selectedFile: '',}) 
+    const [postData, setPostData] = useState({title: '',description: '',tags: '',selectedFile: '',}) 
     
     // Fetching the post with the given ID
     const post = useSelector((state)=> currentId ? state.posts.find((post) => post._id === currentId) : null);
     
     const dispatch = useDispatch();
     const classes = useStyles();
-    
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     useEffect(() => {
         if(post) setPostData(post);
     }, [post])
@@ -22,26 +23,33 @@ const Form = ({currentId, setCurrentId}) => {
         e.preventDefault();
 
         if(currentId){
-            dispatch(updatePost(currentId, postData))    
+            dispatch(updatePost(currentId, {...postData, name: user?.result?.name}))    
         }
         else{
-            dispatch(createPost(postData));
+            dispatch(createPost({...postData, name: user?.result?.name}));
         }
         clear();
     }
 
     const clear = () => {
         setCurrentId(null);
-        setPostData({host: '',title: '',description: '',tags: '',selectedFile: ''})
+        setPostData({title: '',description: '',tags: '',selectedFile: ''})
+    }
+
+    if(!user?.result?.name){
+        return (
+            <Paper className={classes.paper}>
+                <Typography variant="h6" align="center">Sign in to host an activity!</Typography>
+            </Paper>
+        )
     }
 
     return (
         <Paper className={classes.paper}>
             <form className={`${classes.root} ${classes.form}`} autoComplete="off" noValidate onSubmit={handleSubmit}>
-                <Typography variant="h6"> {currentId ? "Edit Your Activity" :"Host an Activity!"}</Typography>
+                <Typography variant="h6"> {currentId ? `Edit Activity: "${post.title}"` :"Host an Activity!"}</Typography>
                 
                 {/*'...' is used to spread the post data and make it persists instead of overwriting everytime.*/}  
-                <TextField name="host" variant="outlined" label="Host" fullWidth value={postData.host} onChange={(e) => setPostData({ ...postData, host: e.target.value })} />
                 <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
                 <TextField name="description" variant="outlined" label="Description" fullWidth value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })} />
                 <TextField name="tags" variant="outlined" label="Tags" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />

@@ -3,12 +3,16 @@ import { Avatar, Paper, Grid, Button, Typography, Container, TextField} from '@m
 import useStyles from './styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Input from './Input'
-// import { GoogleLogin } from 'react-google-login';
+
 import { GoogleLogin, GoogleOAuthProvider  } from '@react-oauth/google';
 import { useDispatch } from 'react-redux'
 
 import jwtDecode from 'jwt-decode'
 import { useHistory } from 'react-router-dom'
+
+import { register, login} from '../../actions/auth'
+
+const initialState = {firstName: '', lastName: '', email: '', password: '', confPassword: ''}
 
 const Auth = () => {
     const classes = useStyles();
@@ -17,16 +21,26 @@ const Auth = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [registerMode, setRegisterMode] = useState(false);
+    const [formData, setFormData] = useState(initialState);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    const handleSubmit = () => {
+        if(registerMode){
+            dispatch(register(formData, history));
+        } else {
+            dispatch(login(formData, history));
+        }
 
+        // console.log(formData);
     }
-    const handleChange = () => {
 
+    const handleChange = (e) => {
+        setFormData({...formData, [e.target.name]: e.target.value})
     }
 
     const switchMode = () => {
+        setFormData(initialState);
         setRegisterMode((prevRegisterMode) => !prevRegisterMode)
         setShowPassword(false);
     };
@@ -37,7 +51,7 @@ const Auth = () => {
     // Google Auth
     const googleFailure = (error) => {
         console.log(error);
-        console.log("Error! Couldn't login with Google.")
+        alert("Error! Couldn't login with Google.")
     };
     const googleSuccess = async (res) => {
         // "?." is used when we may or may not have the object k/as Optional Chaining.
@@ -61,16 +75,16 @@ const Auth = () => {
                 <Typography variant='h5'>{registerMode ? 'Register' : 'Login'}</Typography>
 
                 {/* Input is a InputAdorment type component which helps in avoding repetative code such as fixed properties. Refer to Input.js*/}
-                <form className={classes.form} onSubmit={() => handleSubmit()}>
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {   registerMode && (
                             <>
                                 <Input name='firstName' label="First Name" handleChange={handleChange} autoFocus half />
-                                <Input name='firstName' label="First Name" handleChange={handleChange} autoFocus half />
+                                <Input name='lastName' label="Last Name" handleChange={handleChange} autoFocus half />
                             </>
                         )}
                         <Input name='email' label="Email" handleChange={handleChange} type="email" />
-                        <Input name='password' label="Paswword" handleChange={handleChange} type={ showPassword ? "text" : "password"} handleShowPassword={handleShowPassword}/>
+                        <Input name='password' label="Password" handleChange={handleChange} type={ showPassword ? "text" : "password"} handleShowPassword={handleShowPassword}/>
                         {
                             registerMode &&
                             <Input name='confPassword' label="Confirm Password" handleChange={handleChange} type={ showPassword ? "text" : "password"} />
