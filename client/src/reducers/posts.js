@@ -7,6 +7,10 @@ const reducerFunction = (posts = [], action) => {
             return [...posts, action.payload];
         case 'UPDATE':
             return posts.map((post) => post._id === action.payload._id ? action.payload : post) //Map iterates over an array to change something and returns the updated array.
+        case 'DELETE':
+            return posts.filter((post) => post.id !== action.payload)    
+        case 'LIKE':
+            return posts.map((post) => post._id === action.payload._id ? action.payload : post)
         default:
             return posts;
     }
