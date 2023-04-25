@@ -53,4 +53,12 @@ export default makeStyles({
     display: 'block',
     textAlign: 'initial',
   },
+  iconColor: {
+    color: 'white',
+    backgroundColor: "#379237",
+    '&:hover': {
+      backgroundColor: "#EC7272",
+   },
+  }
 });
+

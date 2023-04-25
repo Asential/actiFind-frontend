@@ -1,7 +1,7 @@
 import React from "react";
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from "@material-ui/core";
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
-import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined'
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase, colors } from "@material-ui/core";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
@@ -11,6 +11,7 @@ import useStyles from './styles'
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts";
 import { useHistory } from "react-router-dom";
+import { green } from "@material-ui/core/colors";
 
 const Post = ({post, setCurrentId}) => {
     const classes = useStyles();
@@ -19,17 +20,25 @@ const Post = ({post, setCurrentId}) => {
 
     const user = JSON.parse(localStorage.getItem('profile'));
 
+    const L = () => {
+        return <Typography style={{fill: "green", color: "green"}}>Like</Typography>
+    }
+
+    const Ls = () => {
+        return <Typography style={{fill: "green", color: "green"}}>Likes</Typography>
+    }
+
     const Likes = () => {
         if (post.likes.length > 0) {
             return post.likes.find((like) => like === (user?.result?.sub || user?.result?._id))
             ? (
-                <><ThumbUpAltIcon fontSize="small" />&nbsp;{post.likes.length > 2 ? `You and ${post.likes.length - 1} others` : `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}` }</>
+                <><FavoriteIcon style={{fill: "green", color: "green"}} fontSize="small" />&nbsp;{post.likes.length}</>
             ) : (
-                <><ThumbUpAltOutlined fontSize="small" />&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}</>
+                <><FavoriteBorderIcon style={{fill: "green", color: "green"}}  fontSize="small" />&nbsp;{post.likes.length}</>
             );
         }
 
-        return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
+        return <><FavoriteBorderIcon style={{fill: "green", color: "green"}} fontSize="small" />&nbsp;</>;
     };
 
     const openPost = () => history.push(`/posts/${post._id}`);
@@ -63,8 +72,8 @@ const Post = ({post, setCurrentId}) => {
                     <Likes />
                 </Button>
                 {(user?.result?._id === post?.host || user?.result?.sub === post?.host) && ( 
-                    <Button size="small" color="primary" onClick={()=>dispatch(deletePost(post._id))}>
-                        <DeleteIcon fontSize="small"/>
+                    <Button style={{color: "green"}}  size="small" color="primary" onClick={()=>dispatch(deletePost(post._id))}>
+                        <DeleteIcon style={{fill: "green"}} fontSize="small"/>
                         Delete 
                     </Button>
                 )}
