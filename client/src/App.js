@@ -20,7 +20,7 @@ const App = () => {
                     <Route path="/auth" exact component={() => (!user ? <Auth/> : <Redirect to="/posts"/>)} />
                     <Route path="/posts" exact component={Home} />
                     <Route path="/posts/search" exact component={Home} />
-                    <Route path="/posts/:id" exact component={PostDetails} />
+                    <Route path="/posts/:id" component={PostDetails} />
 
                 </Switch>
             </Container>

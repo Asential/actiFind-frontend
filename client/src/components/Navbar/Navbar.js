@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { Link, useHistory, useLocation} from 'react-router-dom';
 import { AppBar, Avatar, Toolbar, Typography, Button } from '@material-ui/core';
 import useStyles from './styles';
-import AcUnitIcon from '@material-ui/icons/AcUnit';
+import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
+
 import { useDispatch } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 
@@ -39,17 +40,17 @@ export const Navbar = () => {
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
             <div className={classes.brandContainer} component={Link}  to="/">
-                <Typography className={classes.heading} component={Link} to="/" variant="h2" align="center"> ActiFind </Typography>
-                <AcUnitIcon className={classes.icon} height="60"></AcUnitIcon>
+                <Typography className={classes.heading} component={Link} to="/" variant="h2" align="center"> actiFind </Typography>
+                <NaturePeopleIcon  className={classes.icon} height="60"></NaturePeopleIcon>
             </div>
 
             <Toolbar className={classes.toolbar}>
                 { user ? (
                     // Logged in
                     <div className={classes.profile}>
-                        <Avatar className={classes.purple} alt={user.result.name} src={user.result.imageUrl}> {user.result.name.charAt(0)} </Avatar>
+                        <Avatar className={classes.mainGreen} alt={user.result.name} src={user.result.imageUrl}> {user.result.name.charAt(0)} </Avatar>
                         <Typography className={classes.userName} variant="h6"> {user.result.name}</Typography>
-                        <Button className={ classes.logout} color='secondary' variant="contained" onClick={logout}>Logout</Button>
+                        <Button className={ `${classes.logout}, ${classes.purple}`} color='secondary' variant="contained" onClick={logout}>Logout</Button>
                     </div>
                 ) : (
                     // Guest

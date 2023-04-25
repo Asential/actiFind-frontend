@@ -1,6 +1,6 @@
 import React from "react";
 import Post from "./Post/Post";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress, Paper } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
 import useStyles from "./styles"
@@ -10,6 +10,13 @@ const Posts = ({setCurrentId}) => {
     const classes = useStyles();
 
     if(!posts.length && !isLoading) return "No activities available! Host one yourself :D";
+
+    if(isLoading) {return ( 
+            <Paper className={classes.loadingPaper}>
+                <CircularProgress size="6em"/>
+            </Paper>
+      );
+    }
 
     return (
         isLoading ? <CircularProgress /> : (

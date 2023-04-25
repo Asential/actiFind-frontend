@@ -1,6 +1,21 @@
-import { UPDATE, DELETE, FETCH_ALL, CREATE, LIKE, FETCH_BY_SEARCH, START_LOADING, STOP_LOADING} from '../constants/actionTypes';
+import { UPDATE, DELETE, FETCH_POST, FETCH_ALL, CREATE, LIKE, FETCH_BY_SEARCH, START_LOADING, STOP_LOADING} from '../constants/actionTypes';
 
 import * as api from '../api';
+
+
+export const getPost = (id) => async (dispatch) => {
+    try {
+        console.log("PLACE 1: " + id);
+        dispatch({type: START_LOADING});
+        const { data } = await api.fetchPost(id);
+        console.log(data);
+        dispatch({ type: FETCH_POST, payload: data });
+        dispatch({type: STOP_LOADING});
+
+    } catch (error) {
+        console.log(error.message)
+    }
+};
 
 // Action creators are functions that return an action.
 // Action is just an object that has a type and payload
@@ -17,6 +32,7 @@ export const getPosts = (page) => async (dispatch) => {
         console.log(error.message)
     }
 }
+
 
 export const createPost = (post) => async (dispatch) => {
     try {

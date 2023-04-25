@@ -11,4 +11,13 @@ export default makeStyles((theme) => ({
   actionDiv: {
     textAlign: 'center',
   },
+  loadingPaper: {
+    display: 'flex', 
+    // justifyContent: 'center', 
+    padding: '20px', 
+    borderRadius: '15px', 
+    height: '39vh', 
+    // width: '30%', 
+    // alignSelf:"center"
+  },
 }));

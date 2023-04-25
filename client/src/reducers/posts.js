@@ -1,4 +1,4 @@
-import { UPDATE, DELETE, FETCH_ALL, CREATE, LIKE, FETCH_BY_SEARCH, START_LOADING, STOP_LOADING} from '../constants/actionTypes';
+import { UPDATE, DELETE, FETCH_ALL, CREATE, LIKE, FETCH_BY_SEARCH, START_LOADING, STOP_LOADING, FETCH_POST} from '../constants/actionTypes';
 
 
 // Function that accepts a posts and an action, performs a logic based on the action.
@@ -17,6 +17,8 @@ const reducerFunction = (state = {isLoading: true, posts: []}, action) => {
             };
         case FETCH_BY_SEARCH:
             return { ...state, posts: action.payload,};
+        case FETCH_POST:
+            return { ...state, post: action.payload,};
         case CREATE:
             return { ...state, posts: [ ...state.posts, action.payload]};
         case UPDATE:

@@ -1,5 +1,5 @@
 import React, { useState} from 'react'
-import { Avatar, Paper, Grid, Button, Typography, Container, TextField} from '@material-ui/core'
+import { Avatar, Paper, Grid, Button, Typography, Container, TextField, Grow} from '@material-ui/core'
 import useStyles from './styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Input from './Input'
@@ -67,7 +67,9 @@ const Auth = () => {
     };
 
     return (
+        <Grow in>
         <Container component="main" maxWidth="xs">
+            
             <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
@@ -76,6 +78,7 @@ const Auth = () => {
 
                 {/* Input is a InputAdorment type component which helps in avoding repetative code such as fixed properties. Refer to Input.js*/}
                 <form className={classes.form} onSubmit={handleSubmit}>
+                    
                     <Grid container spacing={2}>
                         {   registerMode && (
                             <>
@@ -95,8 +98,8 @@ const Auth = () => {
                         {registerMode ? 'Register' : 'Login'} 
                     </Button>
 
-                    <GoogleOAuthProvider clientId="130777497916-i7ur9u7p5e9cn8qcanch4uives3b1s61.apps.googleusercontent.com">
-                        <GoogleLogin
+                    <GoogleOAuthProvider clientId="130777497916-i7ur9u7p5e9cn8qcanch4uives3b1s61.apps.googleusercontent.com" >
+                        <GoogleLogin                       
                             render={(renderProps) => (
                                 <Button 
                                 className={classes.googleButton} 
@@ -122,12 +125,13 @@ const Auth = () => {
                             </Button>
                         </Grid>
                     </Grid>
-
+                    
                     
                 </form>
             </Paper>
-
+                                
         </Container>
+        </Grow>
     )
 }
 

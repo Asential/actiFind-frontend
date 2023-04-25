@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@material-ui/core";
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from "@material-ui/core";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -10,10 +10,13 @@ import moment from 'moment'
 import useStyles from './styles'
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts";
+import { useHistory } from "react-router-dom";
 
 const Post = ({post, setCurrentId}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
+
     const user = JSON.parse(localStorage.getItem('profile'));
 
     const Likes = () => {
@@ -29,8 +32,11 @@ const Post = ({post, setCurrentId}) => {
         return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     };
 
+    const openPost = () => history.push(`/posts/${post._id}`);
+
     return (
         <Card className={classes.card} raised elevation={10}>
+            <ButtonBase component="span" className={classes.cardAction} onClick={openPost}>
             <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />
             <div className={classes.overlay}>
                 <Typography variant="h6">{post.name}</Typography>
@@ -50,6 +56,8 @@ const Post = ({post, setCurrentId}) => {
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p"> {post.description}</Typography>
             </CardContent>
+
+            </ButtonBase>
             <CardActions className={classes.cardActions}>
                 <Button disabled={!user?.result} size="small" color="primary" onClick={()=>dispatch(likePost(post._id))}>
                     <Likes />
