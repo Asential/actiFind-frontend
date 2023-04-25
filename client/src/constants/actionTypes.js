@@ -7,3 +7,6 @@ export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH';
 
 export const LOGOUT = 'LOGOUT';
 export const AUTH = 'AUTH';
+
+export const START_LOADING = 'START_LOADING';
+export const STOP_LOADING = 'STOP_LOADING';

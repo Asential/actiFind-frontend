@@ -38,7 +38,7 @@ export const Navbar = () => {
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
-            <div className={classes.brandContainer} Link to="/">
+            <div className={classes.brandContainer} component={Link}  to="/">
                 <Typography className={classes.heading} component={Link} to="/" variant="h2" align="center"> ActiFind </Typography>
                 <AcUnitIcon className={classes.icon} height="60"></AcUnitIcon>
             </div>

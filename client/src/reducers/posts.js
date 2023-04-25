@@ -1,23 +1,33 @@
-import { UPDATE, DELETE, FETCH_ALL, CREATE, LIKE, FETCH_BY_SEARCH} from '../constants/actionTypes';
+import { UPDATE, DELETE, FETCH_ALL, CREATE, LIKE, FETCH_BY_SEARCH, START_LOADING, STOP_LOADING} from '../constants/actionTypes';
 
 
 // Function that accepts a posts and an action, performs a logic based on the action.
-const reducerFunction = (posts = [], action) => {
+const reducerFunction = (state = {isLoading: true, posts: []}, action) => {
     switch (action.type) {
+        case START_LOADING:
+            return {...state, isLoading: true};
+        case STOP_LOADING:
+            return {...state, isLoading: false};
         case FETCH_ALL:
-            return action.payload;
+            return {
+                ...state,
+                posts: action.payload.data, 
+                currPage: action.payload.currPage,
+                numOfPages: action.payload.numOfPages,
+            };
         case FETCH_BY_SEARCH:
-            return action.payload;
+            return { ...state, posts: action.payload,};
         case CREATE:
-            return [...posts, action.payload];
+            return { ...state, posts: [ ...state.posts, action.payload]};
         case UPDATE:
-            return posts.map((post) => post._id === action.payload._id ? action.payload : post) //Map iterates over an array to change something and returns the updated array.
+            return { ...state, posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post)}; //Map iterates over an array to change something and returns the updated array.
         case DELETE:
-            return posts.filter((post) => post.id !== action.payload)    
+            return { ...state, posts: state.posts.filter((post) => post.id !== action.payload)};
         case LIKE:
-            return posts.map((post) => post._id === action.payload._id ? action.payload : post)
+            return { ...state, posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post)};
+        
         default:
-            return posts;
+            return state;
     }
 }
 

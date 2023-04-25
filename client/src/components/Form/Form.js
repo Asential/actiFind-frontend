@@ -9,7 +9,7 @@ const Form = ({currentId, setCurrentId}) => {
     const [postData, setPostData] = useState({title: '',description: '',tags: '',selectedFile: '',}) 
     
     // Fetching the post with the given ID
-    const post = useSelector((state)=> currentId ? state.posts.find((post) => post._id === currentId) : null);
+    const post = useSelector((state)=> currentId ? state.posts.posts.find((post) => post._id === currentId) : null);
     
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -45,10 +45,9 @@ const Form = ({currentId, setCurrentId}) => {
     }
 
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form className={`${classes.root} ${classes.form}`} autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Typography variant="h6"> {currentId ? `Edit Activity: "${post.title}"` :"Host an Activity!"}</Typography>
-                
                 {/*'...' is used to spread the post data and make it persists instead of overwriting everytime.*/}  
                 <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
                 <TextField name="description" variant="outlined" label="Description" fullWidth value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })} />
