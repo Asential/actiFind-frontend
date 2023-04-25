@@ -3,12 +3,18 @@ import { Avatar, Paper, Grid, Button, Typography, Container, TextField} from '@m
 import useStyles from './styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Input from './Input'
-import { GoogleLogin } from 'react-google-login';
-import Icon from './icon.js'
+// import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, GoogleOAuthProvider  } from '@react-oauth/google';
+import { useDispatch } from 'react-redux'
+
+import jwtDecode from 'jwt-decode'
+import { useHistory } from 'react-router-dom'
 
 const Auth = () => {
     const classes = useStyles();
- 
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const [showPassword, setShowPassword] = useState(false);
     const [registerMode, setRegisterMode] = useState(false);
 
@@ -27,11 +33,23 @@ const Auth = () => {
 
     const handleShowPassword = () => setShowPassword ((prevShowPassword) => !prevShowPassword)
 
-    const googleFailure = () => {
+
+    // Google Auth
+    const googleFailure = (error) => {
+        console.log(error);
         console.log("Error! Couldn't login with Google.")
     };
-    const googleSuccess = (res) => {
-        console.log(res);
+    const googleSuccess = async (res) => {
+        // "?." is used when we may or may not have the object k/as Optional Chaining.
+        const token = res?.credential;
+        const result = jwtDecode(token);
+        try {
+            dispatch({type: 'AUTH', data: {result, token}});
+            history.push('/');
+            
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     return (
@@ -59,29 +77,29 @@ const Auth = () => {
                         }
                     </Grid>
                     
-                    
                     <Button className={classes.submit} type='submit' variant='contained' fullWidth color="primary" >
                         {registerMode ? 'Register' : 'Login'} 
                     </Button>
+
+                    <GoogleOAuthProvider clientId="130777497916-i7ur9u7p5e9cn8qcanch4uives3b1s61.apps.googleusercontent.com">
+                        <GoogleLogin
+                            render={(renderProps) => (
+                                <Button 
+                                className={classes.googleButton} 
+                                color="primary" 
+                                fullWidth 
+                                onClick={renderProps.onClick} 
+                                disabled={renderProps.disabled} 
+                                variant="contained">
+                                    Sign In With Google
+                                </Button>
+                            )}
+                            onSuccess={googleSuccess}
+                            onFailure={googleFailure}
+                            cookiePolicy='single_host_origin'
+                        />
+                    </GoogleOAuthProvider>;
                     
-                    <GoogleLogin
-                        clientId="130777497916-i7ur9u7p5e9cn8qcanch4uives3b1s61.apps.googleusercontent.com"
-                        render={(renderProps) => (
-                            <Button 
-                            className={classes.googleButton} 
-                            color="primary" 
-                            fullWidth 
-                            onClick={renderProps.onClick} 
-                            disabled={renderProps.disabled} 
-                            startIcon={<Icon/>} 
-                            variant="contained">
-                                Sign In With Google
-                            </Button>
-                        )}
-                        onSuccess={googleSuccess}
-                        onFailure={googleFailure}
-                        cookiePolicy='single_host_origin'
-                    />
                     
                     <Grid container justifyContent='flex-end' >
                         <Grid item>

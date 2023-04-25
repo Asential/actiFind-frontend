@@ -17,8 +17,9 @@ const Input = ({name, label, half, autoFocus, type, handleChange, handleShowPass
             autoFocus={autoFocus}
             type={type}
             onChange={handleChange} 
+            
             // && is used for 'ONLY IF', normally when null is the option in ternary.
-            InputProps={name==='password' && {  
+            InputProps={name==='password' ? {  
                 endAdornment: (
                     <InputAdornment position='end'>
                         <IconButton onClick={handleShowPassword}>
@@ -26,7 +27,7 @@ const Input = ({name, label, half, autoFocus, type, handleChange, handleShowPass
                         </IconButton>
                     </InputAdornment>
                 )
-            }}
+            }: null}
         />
 
     </Grid>
