@@ -4,7 +4,9 @@ const reducerFunction = (posts = [], action) => {
         case 'FETCH_ALL':
             return action.payload;
         case 'CREATE':
-            return posts;
+            return [...posts, action.payload];
+        case 'UPDATE':
+            return posts.map((post) => post._id === action.payload._id ? action.payload : post) //Map iterates over an array to change something and returns the updated array.
         default:
             return posts;
     }
