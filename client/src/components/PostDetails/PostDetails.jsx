@@ -22,7 +22,6 @@ const PostDetails = () => {
     dispatch(getPost(id));
   }, [id])
 
-  console.log(post);
 
   if(!post) return null;
 
@@ -33,8 +32,7 @@ const PostDetails = () => {
   );
   }
 
-
-  console.log('POST_DETAILS')
+  console.log(post.description);
     return (
       <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
       <div className={classes.card}>
@@ -44,7 +42,7 @@ const PostDetails = () => {
           <Typography variant="h6">Host: {post.name}</Typography>
           <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
           <Divider style={{ margin: '20px 0' }} />
-          <Typography gutterBottom variant="body1" component="p">{post.description}</Typography>
+          <Typography style={{whiteSpace: 'pre-line'}} className={classes.description} gutterBottom variant="body1" component="p">{post.description}</Typography>
 
         </div>
         <div className={classes.imageSection}>

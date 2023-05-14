@@ -59,6 +59,16 @@ export default makeStyles({
     '&:hover': {
       backgroundColor: "#EC7272",
    },
+  },
+  cardDescription: {
+
+    maxWidth: '100%',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 5,
+    overflow: 'hidden',
+    whiteSpace: "pre-wrap",
+    textOverflow: 'ellipsis',
   }
 });
 

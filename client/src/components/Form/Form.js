@@ -50,7 +50,7 @@ const Form = ({currentId, setCurrentId}) => {
                 <Typography variant="h6"> {currentId ? `Edit Activity: "${post.title}"` :"Host an Activity!"}</Typography>
                 {/*'...' is used to spread the post data and make it persists instead of overwriting everytime.*/}  
                 <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
-                <TextField name="description" variant="outlined" label="Description" fullWidth value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })} />
+                <TextField multiline name="description" variant="outlined" label="Description" fullWidth value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })} />
                 <TextField name="tags" variant="outlined" label="Tags" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
                 <div className={classes.fileInput}><FileBase  type="file"multiple = {false} onDone={({base64}) => setPostData({...postData, selectedFile:base64})}/></div>
                 

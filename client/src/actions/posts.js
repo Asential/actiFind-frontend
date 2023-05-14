@@ -5,7 +5,7 @@ import * as api from '../api';
 
 export const getPost = (id) => async (dispatch) => {
     try {
-        console.log("PLACE 1: " + id);
+        // console.log("PLACE 1: " + id);
         dispatch({type: START_LOADING});
         const { data } = await api.fetchPost(id);
         console.log(data);
