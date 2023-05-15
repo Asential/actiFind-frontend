@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
+import { getPost, getPostsBySearch } from '../../actions/posts';
 
 import moment from 'moment';
 
 import { Typography, Paper, CircularProgress, Divider } from '@material-ui/core/';
 import useStyles from './styles';
 
-import { getPost, getPostsBySearch } from '../../actions/posts';
+import CommentSection from './CommentSection';
+
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -51,13 +53,17 @@ const PostDetails = () => {
           <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
           <Divider style={{ margin: '20px 0' }} />
           <Typography style={{whiteSpace: 'pre-line'}} className={classes.description} gutterBottom variant="body1" component="p">{post.description}</Typography>
+          <Divider style={{ margin: '20px 0' }} />
+          <CommentSection post={post} />
         </div>
         <div className={classes.imageSection}>
           <img className={classes.media} src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} />
         </div>
       </div>
 
-      {recommendedPosts.length && (
+
+
+      {recommendedPosts.length === 1 && (
         <div className={classes.section}>
           <Typography gutterBottom variant='h5'>Similar Activites:</Typography>
           <Divider />
@@ -69,12 +75,10 @@ const PostDetails = () => {
                 <Typography gutterBottom variant='subtitle2'>{name}</Typography>
                 <Typography className={classes.cardDescription} gutterBottom variant='subtitle2'>{description}</Typography>
                 <Typography gutterBottom variant='subtitle1'>Likes: {likes.length}</Typography>
-                <img src={selectedFile} width='150px' /> 
+                <img className={classes.cardMedia} src={selectedFile} width='150px' alt=''/> 
               </div>
             ))}
-
           </div>
-
         </div>
       )}
       </Paper>

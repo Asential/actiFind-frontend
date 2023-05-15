@@ -16,9 +16,11 @@ export const createPost = (newPost) => API.post('/posts', newPost);
 export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
 export const deletePost = (id) => API.delete(`/posts/${id}`);
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
-// export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'} &tags=${searchQuery.tags}`);
+export const comment = (value, id) => API.post(`/posts/${id}/commentPost`, { value });
 
-// NEVER MODIFY THE F***ING QUERIES IN THE URL. SINGLE GODDAMN SPACE MADE ME WASTE 3 HOURS F*** THIS
+// export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'} &tags=${searchQuery.tags}`);
+// ^^^ Please never modify search queries in the GET request without knowing what you're doing as a single whitespace may result in you banging your head on the table for 3 hours as you contemplate why you were born on this blue marble.
+
 export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
 
 export const login = (formData) => API.post('/user/login', formData);
