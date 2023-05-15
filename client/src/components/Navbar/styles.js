@@ -45,7 +45,7 @@ export default makeStyles((theme) => ({
   profile: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '400px',
+    width: '300px',
     alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
@@ -57,6 +57,7 @@ export default makeStyles((theme) => ({
     marginLeft: '20px',
   },
   userName: {
+    color: 'green',
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
@@ -68,9 +69,16 @@ export default makeStyles((theme) => ({
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: "#EC7272",
+    '&:hover': {
+      backgroundColor: "#379237",
+   },
   },
   mainGreen:{
-    backgroundColor: "#82CD47"
+    backgroundColor: "#379237",
+    color: "white",
+    '&:hover': {
+      backgroundColor: "#EC7272",
+   },
   },
   secGreen:{
     backgroundColor: "#54B435"

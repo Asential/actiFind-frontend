@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }from "react";
 import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase, colors } from "@material-ui/core";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -19,22 +19,30 @@ const Post = ({post, setCurrentId}) => {
     const history = useHistory();
 
     const user = JSON.parse(localStorage.getItem('profile'));
+    const [likes, setLikes] = useState(post?.likes);
+    
 
-    const L = () => {
-        return <Typography style={{fill: "green", color: "green"}}>Like</Typography>
-    }
+    const userId = user?.result?.sub || user?.result?._id;
+    const hasLikedPost = post.likes.find((like) => like === userId);
 
-    const Ls = () => {
-        return <Typography style={{fill: "green", color: "green"}}>Likes</Typography>
-    }
+    const handleLike = async () => {
+        
+        dispatch(likePost(post._id));
+
+        if(hasLikedPost){
+            setLikes(post.likes.filter((id) => id !== userId));
+        }else{
+            setLikes([...post.likes, userId]);
+        };
+    };
 
     const Likes = () => {
-        if (post.likes.length > 0) {
-            return post.likes.find((like) => like === (user?.result?.sub || user?.result?._id))
+        if (likes.length > 0) {
+            return likes.find((like) => like === userId)
             ? (
-                <><FavoriteIcon style={{fill: "green", color: "green"}} fontSize="small" />&nbsp;{post.likes.length}</>
+                <><FavoriteIcon style={{fill: "green", color: "green"}} fontSize="small" />&nbsp;{likes.length}</>
             ) : (
-                <><FavoriteBorderIcon style={{fill: "green", color: "green"}}  fontSize="small" />&nbsp;{post.likes.length}</>
+                <><FavoriteBorderIcon style={{fill: "green", color: "green"}}  fontSize="small" />&nbsp;{likes.length}</>
             );
         }
 
@@ -75,13 +83,13 @@ const Post = ({post, setCurrentId}) => {
                 </div>
             )}
             <CardActions className={classes.cardActions}>
-                <Button disabled={!user?.result} size="small" color="primary" onClick={()=>dispatch(likePost(post._id))}>
+                <Button disabled={!user?.result} size="small" color="primary" onClick={handleLike}>
                     <Likes />
                 </Button>
                 {(user?.result?._id === post?.host || user?.result?.sub === post?.host) && ( 
                     <Button style={{color: "green"}}  size="small" color="primary" onClick={()=>dispatch(deletePost(post._id))}>
                         <DeleteIcon style={{fill: "green"}} fontSize="small"/>
-                        Delete 
+                         
                     </Button>
                 )}
             </CardActions>
