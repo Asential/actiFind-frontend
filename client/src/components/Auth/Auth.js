@@ -65,6 +65,7 @@ const Auth = () => {
     };
 
     return (
+        <GoogleOAuthProvider clientId="130777497916-i7ur9u7p5e9cn8qcanch4uives3b1s61.apps.googleusercontent.com" >
         <Grow in>
         <Container component="main" maxWidth="xs">
             
@@ -96,27 +97,15 @@ const Auth = () => {
                         {registerMode ? 'Register' : 'Login'} 
                     </Button>
 
-                    <GoogleOAuthProvider clientId="130777497916-i7ur9u7p5e9cn8qcanch4uives3b1s61.apps.googleusercontent.com" >
-                        <GoogleLogin                       
-                            render={(renderProps) => (
-                                <Button 
-                                className={classes.googleButton} 
-                                color="primary" 
-                                fullWidth 
-                                onClick={renderProps.onClick} 
-                                disabled={renderProps.disabled} 
-                                variant="contained">
-                                    Sign In With Google
-                                </Button>
-                            )}
+                    <div style={{display:'flex', justifyContent:'center'}}  color="primary" >
+                    <GoogleLogin  
                             onSuccess={googleSuccess}
                             onFailure={googleFailure}
                             cookiePolicy='single_host_origin'
-                        />
-                    </GoogleOAuthProvider>;
+                        /> 
+                    </div>
                     
-                    
-                    <Grid container justifyContent='flex-end' >
+                    <Grid container justifyContent='center' style={{marginTop: '0.5rem'}}>
                         <Grid item>
                             <Button onClick={switchMode} >
                                 {registerMode ? 'Existing User? ' : 'New User? Register!'} 
@@ -130,6 +119,7 @@ const Auth = () => {
                                 
         </Container>
         </Grow>
+        </GoogleOAuthProvider>
     )
 }
 

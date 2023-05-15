@@ -24,7 +24,7 @@ const reducerFunction = (state = {isLoading: true, posts: []}, action) => {
         case UPDATE:
             return { ...state, posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post)}; //Map iterates over an array to change something and returns the updated array.
         case DELETE:
-            return { ...state, posts: state.posts.filter((post) => post.id !== action.payload)};
+            return { ...state, posts: state.posts.filter((post) => post._id !== action.payload)};
         case LIKE:
             return { ...state, posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post)};
         case COMMENT: 

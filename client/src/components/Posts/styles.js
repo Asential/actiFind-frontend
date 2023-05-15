@@ -13,11 +13,13 @@ export default makeStyles((theme) => ({
   },
   loadingPaper: {
     display: 'flex', 
-    // justifyContent: 'center', 
+    justifyContent: 'center', 
     padding: '20px', 
     borderRadius: '15px', 
     height: '39vh', 
-    // width: '30%', 
-    // alignSelf:"center"
+    alignItems: 'center',
+    '& svg': {
+      color: 'darkgreen',
+    }
   },
 }));

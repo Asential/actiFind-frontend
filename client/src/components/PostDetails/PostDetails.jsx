@@ -5,7 +5,7 @@ import { getPost, getPostsBySearch } from '../../actions/posts';
 
 import moment from 'moment';
 
-import { Typography, Paper, CircularProgress, Divider } from '@material-ui/core/';
+import { Typography, Paper, CircularProgress, Divider, Grid } from '@material-ui/core/';
 import useStyles from './styles';
 
 import CommentSection from './CommentSection';
@@ -63,13 +63,14 @@ const PostDetails = () => {
 
 
 
-      {recommendedPosts.length === 1 && (
+      {recommendedPosts.length !== 0 && (
         <div className={classes.section}>
           <Typography gutterBottom variant='h5'>Similar Activites:</Typography>
           <Divider />
-
-          <div className={classes.recommendedPosts}>
+          {/* <Grid className={classes.mainContainer} container alignItems="stretch" spacing={3}> */}
+          <Grid className={classes.recommendedPosts} container alignItems="stretch" spacing={4}>
             {recommendedPosts.map(({title, description, name, likes, selectedFile, _id}) => ( 
+              <Grid style={{marginBottom:'3rem', marginTop:'2rem'}} item xs={12} sm={12} md={6} lg={3}>
               <div className={classes.cardContent} onClick={() => openPost(_id)} key={_id}>
                 <Typography gutterBottom variant='h6'>{title}</Typography>
                 <Typography gutterBottom variant='subtitle2'>{name}</Typography>
@@ -77,8 +78,10 @@ const PostDetails = () => {
                 <Typography gutterBottom variant='subtitle1'>Likes: {likes.length}</Typography>
                 <img className={classes.cardMedia} src={selectedFile} width='150px' alt=''/> 
               </div>
+            </Grid>
             ))}
-          </div>
+          </Grid>
+          {/* </Grid> */}
         </div>
       )}
       </Paper>

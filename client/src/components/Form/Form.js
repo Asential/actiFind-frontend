@@ -5,6 +5,8 @@ import FileBase from 'react-file-base64'
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost} from "../../actions/posts";
 import { useHistory } from "react-router-dom";
+
+
 const Form = ({currentId, setCurrentId}) => {
     const [postData, setPostData] = useState({title: '',description: '',tags: '',selectedFile: '',}) 
     
@@ -48,7 +50,7 @@ const Form = ({currentId, setCurrentId}) => {
     return (
         <Paper className={classes.paper} elevation={6}>
             <form className={`${classes.root} ${classes.form}`} autoComplete="off" noValidate onSubmit={handleSubmit}>
-                <Typography variant="h6"> {currentId ? `Edit Activity: "${post.title}"` :"Host an Activity!"}</Typography>
+                <Typography variant="h6"> {currentId ? `Edit: "${post.title}"` :"Host an Activity!"}</Typography>
                 {/*'...' is used to spread the post data and make it persists instead of overwriting everytime.*/}  
                 <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
                 <TextField multiline name="description" variant="outlined" label="Description" fullWidth value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })} />
@@ -57,8 +59,8 @@ const Form = ({currentId, setCurrentId}) => {
                 
                 {/* <Button variant="contained" component="label"> Upload File<input type="file" hidden/></Button> */}
 
-                <Button className={classes.buttonSubmit} variant="contained" type="submiit" fullWidth>Submit</Button>
-                <Button variant="contained" color="success" size="small" onClick={clear} fullWidth>Clear</Button>
+                <Button className={classes.buttonSubmit} variant="contained" type="submiit" fullWidth>{currentId ? "Save" : "Submit"}</Button>
+                <Button variant="contained" color="success" size="small" onClick={clear} fullWidth>{currentId ? "Cancel" : "Clear"}</Button>
             </form>
 
         </Paper>

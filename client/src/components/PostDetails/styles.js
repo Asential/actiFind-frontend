@@ -31,6 +31,9 @@ export default makeStyles((theme) => ({
   },
   recommendedPosts: {
     display: 'flex',
+    alignItems: 'stretch',
+    marginBottom: '5rem',
+
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
@@ -42,7 +45,15 @@ export default makeStyles((theme) => ({
     padding: '20px', 
     borderRadius: '15px', 
     height: '39vh',
+    '& svg': {
+      color: 'darkgreen',
+    }
   },
+
+  // mainContainer: {
+  //   display: 'flex',
+  //   alignItems: 'stretch',
+  // },
 
   cardDescription: {
     display: '-webkit-box',
@@ -52,31 +63,31 @@ export default makeStyles((theme) => ({
     whiteSpace: "pre-wrap",
     textOverflow: 'ellipsis',
     
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: '100%',
-      // marginLeft: 0,
-    },
+    // [theme.breakpoints.down('sm')]: {
+    //   maxWidth: '100%',
+    //   // marginLeft: 0,
+    // },
 
   },
+  
   cardContent: {
     display: 'flex',
-    
+
+    height: '100%',
     outline: '2px solid #6b716b',
-    padding: '20px',
     borderRadius: '20px',
     objectFit: 'cover',
-
-    margin: '20px', 
+    padding: '20px',
     cursor: 'pointer',
     flexDirection: 'column',  // inner items will be added vertically
     flexGrow: 1,              // all the available vertical space will be occupied by it
     justifyContent: 'flex-start',
 
-    height: '50%',
-    width: '20%',
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-    },
+    // height: '50%',
+    // width: '20%',
+    // [theme.breakpoints.down('sm')]: {
+    //   width: '100%',
+    // },
 
   },
 
