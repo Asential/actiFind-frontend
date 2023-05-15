@@ -41,4 +41,20 @@ export default makeStyles((theme) => ({
     borderRadius: '15px', 
     height: '39vh',
   },
+  cardDescription: {
+    maxWidth: '200px',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 3,
+    overflow: 'hidden',
+    whiteSpace: "pre-wrap",
+    textOverflow: 'ellipsis',
+  },
+  cardContent: {
+    margin: '20px', 
+    cursor: 'pointer',
+    flexDirection: 'column', // inner items will be added vertically
+    flexGrow: 1,            // all the available vertical space will be occupied by it
+    justifyContent: 'space-between',
+  }
 }));

@@ -31,8 +31,6 @@ const Auth = () => {
         } else {
             dispatch(login(formData, history));
         }
-
-        // console.log(formData);
     }
 
     const handleChange = (e) => {

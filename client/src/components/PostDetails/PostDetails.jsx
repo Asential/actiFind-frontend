@@ -7,7 +7,7 @@ import moment from 'moment';
 import { Typography, Paper, CircularProgress, Divider } from '@material-ui/core/';
 import useStyles from './styles';
 
-import { getPost } from '../../actions/posts';
+import { getPost, getPostsBySearch } from '../../actions/posts';
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -18,10 +18,16 @@ const PostDetails = () => {
 
 
   useEffect(() => {
-    console.log(id);
     dispatch(getPost(id));
   }, [id])
 
+
+  // Using tags of the current post to get similar posts.
+  useEffect(() => {
+    if(post){
+      dispatch(getPostsBySearch({search: 'none', tags: post?.tags.join(',')}));
+    }
+  }, [post])
 
   if(!post) return null;
 
@@ -32,7 +38,9 @@ const PostDetails = () => {
   );
   }
 
-  console.log(post.description);
+  const  recommendedPosts = posts.filter(({ _id}) => _id !== post._id);
+  const openPost = (_id) => history.push(`/posts/${_id}`);
+
     return (
       <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
       <div className={classes.card}>
@@ -43,12 +51,32 @@ const PostDetails = () => {
           <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
           <Divider style={{ margin: '20px 0' }} />
           <Typography style={{whiteSpace: 'pre-line'}} className={classes.description} gutterBottom variant="body1" component="p">{post.description}</Typography>
-
         </div>
         <div className={classes.imageSection}>
           <img className={classes.media} src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} />
         </div>
       </div>
+
+      {recommendedPosts.length && (
+        <div className={classes.section}>
+          <Typography gutterBottom variant='h5'>Similar Activites:</Typography>
+          <Divider />
+
+          <div className={classes.recommendedPosts}>
+            {recommendedPosts.map(({title, description, name, likes, selectedFile, _id}) => ( 
+              <div className={classes.cardContent} onClick={() => openPost(_id)} key={_id}>
+                <Typography gutterBottom variant='h6'>{title}</Typography>
+                <Typography gutterBottom variant='subtitle2'>{name}</Typography>
+                <Typography className={classes.cardDescription} gutterBottom variant='subtitle2'>{description}</Typography>
+                <Typography gutterBottom variant='subtitle1'>Likes: {likes.length}</Typography>
+                <img src={selectedFile} width='150px' /> 
+              </div>
+            ))}
+
+          </div>
+
+        </div>
+      )}
       </Paper>
   )
 }

@@ -4,13 +4,14 @@ import useStyles from './styles'
 import FileBase from 'react-file-base64'
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost} from "../../actions/posts";
-
+import { useHistory } from "react-router-dom";
 const Form = ({currentId, setCurrentId}) => {
     const [postData, setPostData] = useState({title: '',description: '',tags: '',selectedFile: '',}) 
     
     // Fetching the post with the given ID
     const post = useSelector((state)=> currentId ? state.posts.posts.find((post) => post._id === currentId) : null);
     
+    const history = useHistory();
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -26,7 +27,7 @@ const Form = ({currentId, setCurrentId}) => {
             dispatch(updatePost(currentId, {...postData, name: user?.result?.name}))    
         }
         else{
-            dispatch(createPost({...postData, name: user?.result?.name}));
+            dispatch(createPost({...postData, name: user?.result?.name}, history));
         }
         clear();
     }
