@@ -39,7 +39,8 @@ export default makeStyles((theme) => ({
     justifyContent: 'flex-end',
     width: '400px',
     [theme.breakpoints.down('sm')]: {
-      width: 'auto',
+      width: '100%',
+
     },
   },
   profile: {
@@ -48,10 +49,13 @@ export default makeStyles((theme) => ({
     width: '300px',
     alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
-      width: 'auto',
+      width: '100%',
       marginTop: 20,
-      justifyContent: 'center',
     },
+  },
+  logoutContainer: {
+    display: 'flex',
+    justifyContent: 'center',
   },
   logout: {
     marginLeft: '20px',

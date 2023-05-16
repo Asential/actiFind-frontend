@@ -54,8 +54,8 @@ export const Navbar = () => {
                     </div>
                 ) : (
                     // Guest
-                    <div>
-                        <Button className={ `${classes.logout}, ${classes.mainGreen}`} component={Link} to="/auth"  variant="contained">Sign In</Button>
+                    <div className={classes.logoutContainer}>
+                        <Button className={ ` ${classes.mainGreen}`} component={Link} to="/auth"  variant="contained">Sign In</Button>
                     </div>
                 )}
             </Toolbar>

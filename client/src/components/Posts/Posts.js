@@ -9,7 +9,11 @@ const Posts = ({setCurrentId}) => {
     const {posts, isLoading} = useSelector((state)=> state.posts)
     const classes = useStyles();
 
-    if(!posts.length && !isLoading) return "No activities available! Host one yourself :D";
+    if(!posts.length && !isLoading) return (
+            <Paper className={classes.loadingPaper}>
+                <h1 className={classes.heading}>No activities found!</h1>  
+            </Paper>  
+    );
 
     if(isLoading) {return ( 
             <Paper className={classes.loadingPaper}>

@@ -22,4 +22,11 @@ export default makeStyles((theme) => ({
       color: 'darkgreen',
     }
   },
+  heading: {
+    fontFamily: "system-ui",
+    color: 'rgba(84, 180, 53, 1)',
+    textDecoration: 'none',
+    fontSize: '2.5em',
+    fontWeight: 350,
+  },
 }));
